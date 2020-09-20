@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "local": "set DEBUG=myapp:* & npm start",
-    "start": "node ./bin/www",
+    "start": "sequelize db:migrate & node ./bin/www",
     "migrate": "sequelize db:migrate",
     "migrate:prod": "heroku run sequelize db:migrate --env production -a treelang-api"
   },
