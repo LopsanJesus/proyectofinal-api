@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 
 module.exports = {
   development: {
@@ -8,5 +8,5 @@ module.exports = {
   production: {
     url: process.env.DATABASE_URL,
     dialect: 'postgres',
-  },
+  }
 }

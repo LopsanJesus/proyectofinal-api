@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "local": "set DEBUG=myapp:* & npm start",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "migrate:dev": "sequelize db:migrate",
+    "migrate:prod": "heroku run sequelize db:migrate --env production -a treelang-api"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
