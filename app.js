@@ -35,8 +35,28 @@ const server = new ApolloServer({
   
 // });
 
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+var port = normalizePort(process.env.PORT || '4000');
+
 server
-  .listen()
+  .listen({
+    port: port,
+  })
   .then(({ url }) => console.log('Server is running on localhost:4000'))
 
 //module.exports = app;
