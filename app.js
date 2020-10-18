@@ -57,6 +57,6 @@ server
   .listen({
     port: port,
   })
-  .then(({ url }) => console.log('Server is running on localhost:4000'))
+  .then(({ url }) => console.log('Server is running on ' + url))
 
 //module.exports = app;
