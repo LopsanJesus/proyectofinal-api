@@ -21,24 +21,6 @@ var schema = buildSchema(`
     }
 `);
 
-const { Sequelize } = require('sequelize');
-const sequelize = new Sequelize('postgres://treelang:treelang@127.0.0.1:5432/treelang') // Example for postgres
-
-const Person = require("./database/models/person.js")(sequelize, Sequelize);
-
-var obtainPersonFromSequelize = (param) => {
-  return Person.findAll({
-    where: {
-      id: param
-    }
-  });
-};
-
-var getPerson = (args) => {
-  var id = args.id;
-
-  return obtainPersonFromSequelize(id).then((result) => new Person(result));
-};
 
 // Root resolver
 var root = {
