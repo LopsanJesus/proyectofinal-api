@@ -6,8 +6,7 @@
     "local": "nodemon",
     "start": "node ./bin/www",
     "migrate": "node_modules/.bin/sequelize db:migrate",
-    "migrate:prod": "heroku run node_modules/.bin/sequelize db:migrate --env production -a treelang-api",
-    "localdebug": "set DEBUG=myapp:* & npm start"
+    "migrate:prod": "heroku run node_modules/.bin/sequelize db:migrate --env production -a treelang-api"
   },
   "dependencies": {
     "apollo-server": "^2.18.2",
