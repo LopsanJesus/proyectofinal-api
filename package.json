@@ -12,9 +12,9 @@
     "db:seed": "node database/config/seed.js",
 
     "db:restart:prod": "npm run db:drop:prod && npm run db:migrate:prod && npm run db:seed:prod",
-    "db:drop:prod": "heroku run node database/config/drop.js -a $npm_package_name",
-    "db:migrate:prod": "heroku run node database/config/migrate.js -a $npm_package_name",
-    "db:seed:prod": "heroku run node database/config/seed.js -a $npm_package_name"
+    "db:drop:prod": "heroku run node database/config/drop.js -a %npm_package_name%",
+    "db:migrate:prod": "heroku run node database/config/migrate.js -a %npm_package_name%",
+    "db:seed:prod": "heroku run node database/config/seed.js -a %npm_package_name%"
   },
   "dependencies": {
     "apollo-server-express": "^2.18.1",
