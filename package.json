@@ -5,12 +5,16 @@
   "scripts": {
     "local": "nodemon",
     "start": "node ./bin/www",
-    "db:update": "npm run migrate && npm run seed",
-    "migrate": "node migrate.js",
-    "seed": "node seed.js",
-    "db:update:prod": "npm run migrate:prod && npm run seed:prod",
-    "migrate:prod": "heroku run node migrate.js -a treelang-api",
-    "seed:prod": "heroku run node seed.js -a treelang-api"
+
+    "db:restart": "npm run db:drop && npm run db:migrate && npm run db:seed",
+    "db:drop": "node database/config/drop.js",
+    "db:migrate": "node database/config/migrate.js",
+    "db:seed": "node database/config/seed.js",
+
+    "db:restart:prod": "npm run db:drop:prod && npm run db:migrate:prod && npm run db:seed:prod",
+    "db:drop:prod": "heroku run node database/config/drop.js -a $npm_package_name",
+    "db:migrate:prod": "heroku run node database/config/migrate.js -a $npm_package_name",
+    "db:seed:prod": "heroku run node database/config/seed.js -a $npm_package_name"
   },
   "dependencies": {
     "apollo-server-express": "^2.18.1",
