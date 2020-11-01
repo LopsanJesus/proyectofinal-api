@@ -20,9 +20,24 @@ const seeds =
             model: 'Tree',
             data: [
                 {
-                    name: 'Willow',
+                    name: 'B1 Alemán',
                 }, {
-                    name: 'Walnut',
+                    name: 'B1 Inglés',
+                }
+            ]
+        },
+        {
+            model: 'Language',
+            data: [
+                {
+                    name: 'Español',
+                    code: 'ES',
+                },{
+                    name: 'Inglés',
+                    code: 'EN',
+                },{
+                    name: 'Alemán',
+                    code: 'DE',
                 }
             ]
         },

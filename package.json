@@ -5,9 +5,12 @@
   "scripts": {
     "local": "nodemon",
     "start": "node ./bin/www",
+    "db:update": "npm run migrate && npm run seed",
     "migrate": "node migrate.js",
+    "seed": "node seed.js",
+    "db:update:prod": "npm run migrate:prod && npm run seed:prod",
     "migrate:prod": "heroku run node migrate.js -a treelang-api",
-    "seed": "node seed.js"
+    "seed:prod": "heroku run node seed.js -a treelang-api"
   },
   "dependencies": {
     "apollo-server-express": "^2.18.1",

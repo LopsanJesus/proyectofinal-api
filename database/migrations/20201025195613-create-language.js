@@ -2,16 +2,12 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Languages', {
-      id: {
+      code: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
-      },
-      shortName: {
         type: Sequelize.STRING
       },
       createdAt: {
