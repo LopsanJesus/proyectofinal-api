@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Branch extends Model {
+  class LeafRecord extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,11 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  Branch.init({
-    name: DataTypes.STRING
+  LeafRecord.init({
+    attempts: DataTypes.INTEGER,
+    hits: DataTypes.INTEGER,
+    isApple: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'Branch',
+    modelName: 'LeafRecord',
   });
-  return Branch;
+  return LeafRecord;
 };

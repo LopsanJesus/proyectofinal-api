@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Test.init({
-    name: DataTypes.STRING,
-    date: DataTypes.DATE
+    numberOfLeaves: DataTypes.INTEGER,
+    score: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Test',

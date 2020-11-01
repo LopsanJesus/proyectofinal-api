@@ -1,14 +1,7 @@
-// resolvers.js
 const resolvers = {
     Query: {
         async getStudent(root, { id }, { models }) {
-            //console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             return models.Student.findByPk(id)
-            // return {
-            //     id: 10,
-            //     firstName: "Jesus",
-            //     email: "jesus@jesus.com"
-            // }
         },
         async getAllStudents(root, args, { models }) {
             return models.Student.findAll()
@@ -19,7 +12,6 @@ const resolvers = {
     },
     Mutation: {
         async createStudent(root, { firstName, email }, { models }) {
-            console.log("Entra");
             return models.Student.create({
                 firstName,
                 email

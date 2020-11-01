@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
-const typeDefs = gql`
+const typeDefs = 
+
+gql`
     type Student {
         id: Int!
         firstName: String!
@@ -23,6 +25,8 @@ const typeDefs = gql`
     type Mutation {
         createStudent( firstName: String!, email: String!): Student!
         createHobby( studentId: Int!, title: String!): Hobby!
-    }`;
+    }
+    
+`;
 
 module.exports = typeDefs

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   Leaf.init({
     name: DataTypes.STRING,
-    point: DataTypes.INTEGER
+    translation: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Leaf',

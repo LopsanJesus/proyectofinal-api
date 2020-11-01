@@ -5,26 +5,20 @@
   "scripts": {
     "local": "nodemon",
     "start": "node ./bin/www",
-    "migrate": "node_modules/.bin/sequelize db:migrate",
-    "migrate:prod": "heroku run node_modules/.bin/sequelize db:migrate --env production -a treelang-api"
+    "migrate": "node migrate.js",
+    "migrate:prod": "heroku run node migrate.js -a treelang-api",
+    "seed": "node seed.js"
   },
   "dependencies": {
-    "apollo-server": "^2.18.2",
     "apollo-server-express": "^2.18.1",
-    "cookie-parser": "~1.4.4",
-    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-graphql": "^0.11.0",
     "graphql": "^15.3.0",
     "morgan": "~1.9.1",
-    "mysql2": "^2.2.5",
     "nodemon": "^2.0.4",
-    "pg": "^8.4.0",
-    "pg-hstore": "^2.3.3",
+    "pg": "^8.4.1",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.0.0"
+    "sequelize-cli": "^6.2.0"
   }
 }
