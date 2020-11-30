@@ -3,8 +3,28 @@ const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers')
 const models = require('./database/models');
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
+const { JWT_SECRET } = process.env
 
-const server = new ApolloServer({ typeDefs, resolvers, context: { models } });
+const getUser = token => {
+    try {
+        if (token) {
+            return jwt.verify(token, JWT_SECRET)
+        }
+        return null
+    } catch (error) {
+        return null
+    }
+}
+
+const server = new ApolloServer({
+    typeDefs, resolvers, context: (({ req }) => {
+        const token = req.get('Authorization') || ''
+        return { user: getUser(token.replace('Bearer', '')) }
+    })
+});
+
 const app = express();
 
 var indexRouter = require('./routes/index');
@@ -19,7 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 server.applyMiddleware({ app });
-models.sequelize.authenticate();
-models.sequelize.sync();
+// models.sequelize.authenticate();
+// models.sequelize.sync();
 
 module.exports = app;

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('LeafRecords', {
+    await queryInterface.createTable('LeafRecord', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -17,6 +17,22 @@ module.exports = {
       isApple: {
         type: Sequelize.BOOLEAN
       },
+      importedTreeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'ImportedTree',
+          key: 'id'
+        },
+      },
+      leafId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Leaf',
+          key: 'id'
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -28,6 +44,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('LeafRecords');
+    await queryInterface.dropTable('LeafRecord');
   }
 };

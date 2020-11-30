@@ -5,12 +5,10 @@
   "scripts": {
     "local": "nodemon",
     "start": "node ./bin/www",
-
     "db:restart": "npm run db:drop && npm run db:migrate && npm run db:seed",
     "db:drop": "node database/config/drop.js",
     "db:migrate": "node database/config/migrate.js",
     "db:seed": "node database/config/seed.js",
-
     "db:restart:prod": "npm run db:drop:prod && npm run db:migrate:prod && npm run db:seed:prod",
     "db:drop:prod": "heroku run node database/config/drop.js -a %npm_package_name%",
     "db:migrate:prod": "heroku run node database/config/migrate.js -a %npm_package_name%",
@@ -18,10 +16,12 @@
   },
   "dependencies": {
     "apollo-server-express": "^2.18.1",
+    "bcryptjs": "^2.4.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.3.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.4",
     "pg": "^8.4.1",

@@ -4,13 +4,41 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Tree extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Tree.hasMany(models.Branch, {
+        foreignKey: {
+          name: 'treeId'
+        }
+      });
+      Tree.hasMany(models.ImportedTree, {
+        foreignKey: {
+          name: 'treeId'
+        }
+      });
+      Tree.belongsTo(models.Language, {
+        constraints: true,
+        onDelete: 'CASCADE',
+        foreignKey: {
+          name: 'sourceLang',
+          allowNull: false
+        }
+      });
+      Tree.belongsTo(models.Language, {
+        constraints: true,
+        onDelete: 'CASCADE',
+        foreignKey: {
+          name: 'targetLang',
+          allowNull: false
+        }
+      });
+      Tree.belongsTo(models.User, {
+        constraints: true,
+        onDelete: 'CASCADE',
+        foreignKey: {
+          name: 'owner',
+          allowNull: false
+        }
+      });
     }
   };
   Tree.init({
@@ -18,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Tree',
+    freezeTableName: true,
   });
   return Tree;
 };

@@ -4,13 +4,20 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Leaf extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Leaf.belongsTo(models.Branch, {
+        constraints: true,
+        onDelete: 'CASCADE',
+        foreignKey: {
+          name: 'branchId',
+          allowNull: false
+        }
+      });
+      Leaf.hasMany(models.LeafRecord, {
+        foreignKey: {
+          name: 'leafId'
+        }
+      });
     }
   };
   Leaf.init({
@@ -19,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Leaf',
+    freezeTableName: true,
   });
   return Leaf;
 };

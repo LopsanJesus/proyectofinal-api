@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('ImportedTrees', {
+    await queryInterface.createTable('ImportedTree', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +10,22 @@ module.exports = {
       },
       customName: {
         type: Sequelize.STRING
+      },
+      treeId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Tree',
+          key: 'id'
+        },
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id'
+        },
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ImportedTrees');
+    await queryInterface.dropTable('ImportedTree');
   }
 };
