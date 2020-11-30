@@ -21,17 +21,33 @@ const typeDefs =
         user: User!
     }
 
+    type Tree {
+        id: Int!
+        name: String!
+        owner: User!
+        sourceLang: Language!
+        targetLang: Language!
+    }
+
+    type ImportedTree {
+        id: Int!
+        customName: String!
+        treeId: Tree!
+        userId: User!
+    }
+
     type Query {
-        getLanguage(code: String!): Language!
-        getAllLanguages: [Language!]!
-        getUser(id: Int!): User
-        getAllUsers: [User!]!
+        # getLanguage(code: String!): Language!
+        # getAllLanguages: [Language!]!
+        # getUser(id: Int!): User
         getMe: User
+        # getAllUsers: [User!]!
+        getMyForest: [ImportedTree!]!
     }
 
     type Mutation {
-        createLanguage(code: String!, name: String!): Language!
-        createUser(name: String!, email: String!, password: String!): User!
+        # createLanguage(code: String!, name: String!): Language!
+        # createUser(name: String!, email: String!, password: String!): User!
         registerUser(name: String, email: String!, password: String!): AuthPayload!
         login (email: String!, password: String!): AuthPayload!
     }

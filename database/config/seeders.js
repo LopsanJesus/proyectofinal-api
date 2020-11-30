@@ -12,11 +12,11 @@ const getSeeds = async () => (
                 },
                 {
                     name: 'Inglés',
-                    code: 'EN',
+                    code: 'GB',
                 },
                 {
-                    name: 'Alemán',
-                    code: 'DE',
+                    name: 'Francés',
+                    code: 'FR',
                 }
             ]
         },
@@ -44,7 +44,7 @@ const getSeeds = async () => (
             model: 'Tree',
             data: [
                 {
-                    name: 'B1 Alemán',
+                    name: 'B1 Francés',
                     owner: 2,
                     sourceLang: 1,
                     targetLang: 3,

@@ -1,7 +1,7 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers')
+const typeDefs = require('./graphql/schema');
+const resolvers = require('./graphql/resolvers')
 const models = require('./database/models');
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
@@ -21,7 +21,7 @@ const getUser = token => {
 const server = new ApolloServer({
     typeDefs, resolvers, context: (({ req }) => {
         const token = req.get('Authorization') || ''
-        return { user: getUser(token.replace('Bearer', '')) }
+        return { loggedUser: getUser(token.replace('Bearer', '')) }
     })
 });
 
