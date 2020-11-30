@@ -1,4 +1,5 @@
 const models = require('../models');
+const bcrypt = require('bcryptjs');
 
 const seeds =
     [
@@ -25,17 +26,17 @@ const seeds =
                 {
                     name: 'John Doe',
                     email: 'johndoe@johndoe.com',
-                    password: 'john'
-                }, 
+                    password: await bcrypt.hash('john', 10)
+                },
                 {
                     name: 'Jesus',
                     email: 'suspezchez@gmail.com',
-                    password: 'jesus'
-                }, 
+                    password: await bcrypt.hash('jesus', 10)
+                },
                 {
                     name: 'María',
                     email: 'maria10@gmail.com',
-                    password: 'maria'
+                    password: await bcrypt.hash('maria', 10)
                 },
             ]
         },
@@ -47,7 +48,7 @@ const seeds =
                     owner: 2,
                     sourceLang: 1,
                     targetLang: 3,
-                }, 
+                },
                 {
                     name: 'B1 Inglés',
                     owner: 1,
@@ -108,11 +109,11 @@ const seeds =
                     customName: 'Mi arbol importado',
                     treeId: 1,
                     userId: 1,
-                },{
+                }, {
                     customName: 'Mi arbol importado 2',
                     treeId: 1,
                     userId: 2,
-                },{
+                }, {
                     customName: 'Mi arbol',
                     treeId: 2,
                     userId: 2,
@@ -126,15 +127,15 @@ const seeds =
                     numberOfLeaves: 20,
                     score: 15,
                     importedTreeId: 1,
-                },{
+                }, {
                     numberOfLeaves: 20,
                     score: 0,
                     importedTreeId: 1,
-                },{
+                }, {
                     numberOfLeaves: 13,
                     score: 7,
                     importedTreeId: 2,
-                },{
+                }, {
                     numberOfLeaves: 2,
                     score: 1,
                     importedTreeId: 1
@@ -150,19 +151,19 @@ const seeds =
                     isApple: false,
                     importedTreeId: 1,
                     leafId: 2,
-                },{
+                }, {
                     attempts: 3,
                     hits: 2,
                     isApple: false,
                     importedTreeId: 1,
                     leafId: 2,
-                },{
+                }, {
                     attempts: 6,
                     hits: 6,
                     isApple: true,
                     importedTreeId: 2,
                     leafId: 1,
-                },{
+                }, {
                     attempts: 9,
                     hits: 0,
                     isApple: false,
@@ -179,11 +180,12 @@ const cleanAndSeed = (seeds) => {
             where: {}
         });
 
-        models[seed.model].bulkCreate(seed.data).then((inserts) => {
-            console.log(inserts.length + " " + seed.model + "s seeded");
-        }).catch((err) => {
-            console.log("Error inserting in " + seed.model);
-        });
+        models[seed.model].bulkCreate(seed.data).
+            then((inserts) => {
+                console.log(inserts.length + " " + seed.model + "s seeded");
+            }).catch((err) => {
+                console.log("Error inserting in " + seed.model);
+            });
     });
 };
 
