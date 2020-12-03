@@ -57,21 +57,21 @@ const resolvers = {
         //         password: await bcrypt.hash(password, 10)
         //     })
         // },
-        async registerUser(_, { name, email, password }) {
+        async register(_, { name, email, password }) {
             try {
                 const user = await models.User.create({
                     name,
                     email,
                     password: await bcrypt.hash(password, 10)
                 })
-                const token = jsonwebtoken.sign(
-                    { id: user.id, email: user.email },
-                    process.env.JWT_SECRET,
-                    { expiresIn: '1y' }
-                )
-                return {
-                    token, user
-                }
+                // const token = jsonwebtoken.sign(
+                //     { id: user.id, email: user.email },
+                //     process.env.JWT_SECRET,
+                //     { expiresIn: '1y' }
+                // )
+                return user
+                // /*token,*/ user
+
             } catch (error) {
                 throw new Error(error.message)
             }

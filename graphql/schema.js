@@ -48,7 +48,7 @@ const typeDefs =
     type Mutation {
         # createLanguage(code: String!, name: String!): Language!
         # createUser(name: String!, email: String!, password: String!): User!
-        registerUser(name: String, email: String!, password: String!): AuthPayload!
+        register(name: String, email: String!, password: String!): User!
         login (email: String!, password: String!): AuthPayload!
     }
     
