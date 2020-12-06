@@ -27,6 +27,8 @@ const typeDefs =
         owner: User!
         sourceLang: Language!
         targetLang: Language!
+        branches: [Branch!]
+        importedBy: [ImportedTree!]
     }
 
     type ImportedTree {
@@ -36,20 +38,43 @@ const typeDefs =
         userId: User!
     }
 
+    type Branch {
+        id: Int!
+        name: String!
+        numberOfLeaves: Int!
+        numberOfApples: Int!
+    }
+
+    type Leaf {
+        id: Int!
+        name: String!
+        translation: String!
+    }
+
+    type Test {
+        id: Int!
+        numberOfLeaves: Int!
+        score: Int!
+    }
+
     type Query {
         # getLanguage(code: String!): Language!
-        # getAllLanguages: [Language!]!
+        getAllLanguages: [Language!]!
         # getUser(id: Int!): User
         getMe: User
         # getAllUsers: [User!]!
         getMyForest: [ImportedTree!]!
+        getAllTrees: [Tree!]!
+        getTree(id: Int!): Tree!
     }
 
     type Mutation {
         # createLanguage(code: String!, name: String!): Language!
         # createUser(name: String!, email: String!, password: String!): User!
-        register(name: String, email: String!, password: String!): User!
+        register (name: String!, email: String!, password: String!): User!
         login (email: String!, password: String!): AuthPayload!
+        importTree (id: Int!): ImportedTree!
+        createTree (name: String!, sourceLang: Int!, targetLang: Int!): Tree!
     }
     
 `;
