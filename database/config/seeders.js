@@ -8,15 +8,15 @@ const getSeeds = async () => (
             data: [
                 {
                     name: 'Español',
-                    code: 'ES',
+                    code: 'es',
                 },
                 {
                     name: 'Inglés',
-                    code: 'GB',
+                    code: 'en',
                 },
                 {
                     name: 'Francés',
-                    code: 'FR',
+                    code: 'fr',
                 }
             ]
         },

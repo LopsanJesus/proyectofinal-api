@@ -41,40 +41,48 @@ const typeDefs =
     type Branch {
         id: Int!
         name: String!
-        numberOfLeaves: Int!
-        numberOfApples: Int!
+        leaves: [Leaf!]!
     }
 
     type Leaf {
         id: Int!
         name: String!
         translation: String!
+        branchId: Branch!
+        leafRecords: [LeafRecord!]!
+    }
+
+    type LeafRecord {
+        id: Int!
+        attempts: Int!
+        hits: Int!
+        isApple: Boolean!
+        importedTree: ImportedTree!
+        leafId: Leaf!
     }
 
     type Test {
         id: Int!
         numberOfLeaves: Int!
         score: Int!
+        importedTreeId: ImportedTree!
     }
 
     type Query {
-        # getLanguage(code: String!): Language!
         getAllLanguages: [Language!]!
-        # getUser(id: Int!): User
         getMe: User
-        # getAllUsers: [User!]!
         getMyForest: [ImportedTree!]!
         getAllTrees: [Tree!]!
         getTree(id: Int!): Tree!
+        getBranch(id: Int!): Branch!
     }
 
     type Mutation {
-        # createLanguage(code: String!, name: String!): Language!
-        # createUser(name: String!, email: String!, password: String!): User!
         register (name: String!, email: String!, password: String!): User!
         login (email: String!, password: String!): AuthPayload!
         importTree (id: Int!): ImportedTree!
         createTree (name: String!, sourceLang: Int!, targetLang: Int!): Tree!
+        createBranch (tree: Int!, name: String!, names: [String!]!, translations: [String!]!): Int!
     }
     
 `;

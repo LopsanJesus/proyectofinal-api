@@ -6,40 +6,18 @@ require('dotenv').config()
 
 const resolvers = {
     Query: {
-        // async getLanguage(_, { code }) {
-        //     return models.Language.findOne({ where: { code: code } })
-        // },
         async getAllLanguages(_, args) {
             return models.Language.findAll()
         },
-        // async getUser(_, { id }) {
-        //     return models.User.findOne({ where: { id: id } });
-        // },
         async getMe(_, args, { loggedUser }) {
             if (!loggedUser) throw new Error('You are not authenticated')
             return await models.User.findByPk(loggedUser.id)
         },
-        // async getAllUsers(root, args, { user }) {
-        //     try {
-        //         if (!user) throw new Error('You are not authenticated!')
-        //         return models.User.findAll()
-        //     } catch (error) {
-        //         console.log(error);
-        //         throw new Error(error.message)
-        //     }
-        // },
         async getMyForest(_, args, { loggedUser }) {
             try {
                 if (!loggedUser) throw new Error('You are not authenticated!')
-                // console.log("\n\n**********************************");
-                // console.log(loggedUser.name);
-                // console.log("\n\n**********************************");
                 return models.ImportedTree.findAll({ where: { userId: loggedUser.id } })
-                // console.log("***MODELO***");
-                // console.log(modelo)
-                //return modelo
             } catch (error) {
-                // console.log(error);
                 throw new Error(error.message)
             }
         },
@@ -52,29 +30,20 @@ const resolvers = {
         },
         async getTree(_, { id }) {
             try {
-                console.log(id);
-                const modelo = models.Tree.findByPk(id);
-                console.log(await modelo)
-                return modelo
+                return models.Tree.findByPk(id)
             } catch (error) {
                 throw new Error(error.message)
             }
         },
+        async getBranch(_, { id }) {
+            try {
+                return modelo = models.Branch.findByPk(id);
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        }
     },
     Mutation: {
-        // async createLanguage(root, { code, name }) {
-        //     return models.Language.create({
-        //         code,
-        //         name
-        //     })
-        // },
-        // async createUser(_, { name, email, password }) {
-        //     return models.User.create({
-        //         name,
-        //         email,
-        //         password: await bcrypt.hash(password, 10)
-        //     })
-        // },
         async register(_, { name, email, password }) {
             try {
                 const user = await models.User.create({
@@ -82,14 +51,7 @@ const resolvers = {
                     email,
                     password: await bcrypt.hash(password, 10)
                 })
-                // const token = jsonwebtoken.sign(
-                //     { id: user.id, email: user.email },
-                //     process.env.JWT_SECRET,
-                //     { expiresIn: '1y' }
-                // )
                 return user
-                // /*token,*/ user
-
             } catch (error) {
                 throw new Error(error.message)
             }
@@ -162,15 +124,42 @@ const resolvers = {
             } catch (error) {
                 throw new Error(error.message)
             }
+        },
+        async createBranch(_, { tree, name, names, translations }, { loggedUser }) {
+            try {
+                if (!loggedUser)
+                    throw new Error('You are not authenticated!');
+
+                const branch = await models.Branch.create({
+                    name: name,
+                    treeId: tree
+                });
+
+                var leafs = [];
+                names.map((element, index) => {
+                    leafs[index] = {
+                        branchId: branch.id,
+                        name: element,
+                        translation: translations[index]
+                    }
+                })
+
+                var insertsLength = -1;
+                models.Leaf.bulkCreate(leafs)
+                    .then((inserts) => { insertsLength = inserts.length; })
+                    .catch((err) => {
+                        console.log("Error inserting leaves");
+                        console.log(err);
+                    });
+                return insertsLength;
+
+            } catch (error) {
+                throw new Error(error.message)
+            }
         }
-        // async createHobby(root, { studentId, title }) {
-        //     return models.Hobby.create({ studentId, title })
-        // }
     },
     ImportedTree: {
         async treeId(treeId) {
-            // console.log(treeId)
-            //console.log(await treeId.getTree())
             return treeId.getTree()
         },
         async userId(userId) {
@@ -179,50 +168,39 @@ const resolvers = {
     },
     Tree: {
         async owner(userId) {
-            //console.log(userId)
             return userId.getUser()
         },
         async sourceLang(languageId) {
-            // console.log("****SOURCE******")
-            //console.log("****************" + languageId.dataValues.sourceLang)
             return models.Language.findOne({ where: { id: languageId.dataValues.sourceLang } })
         },
         async targetLang(languageId) {
-            // console.log("****TARGET******")
-            // console.log(d)
             return models.Language.findOne({ where: { id: languageId.dataValues.targetLang } })
         },
         async branches(tree) {
-            // console.log("****TARGET******")
-            // console.log(d)
-            //return models.Language.findOne({ where: { id: languageId.dataValues.targetLang } })
             return tree.getBranches()
         },
         async importedBy(treeId) {
-            //console.log(await treeId.getImportedTrees())
             return treeId.getImportedTrees()
         },
     },
     Branch: {
-        async numberOfLeaves(branchId) {
-            //console.log(await branchId.getLeafs().length)
-            const { count } = await models.Leaf.findAndCountAll({ where: { branchId: branchId.id } });
-            // console.log("***************************\n" + await count + "\n*****************************");
-            // console.log("***************************\n" + await rows + "\n*****************************");
-            // console.log(count)
-            return count
-            //return models.Leaf.findAndCountAll({ where: { branchId: branchId } }).count
+        async leaves(branch) {
+            return branch.getLeafs()
         },
-        async numberOfApples(branchId) {
-            //const { count } = await models.Leaf.findAndCountAll({ where: { branchId: branchId.id } });
-            return 0
+    },
+    Leaf: {
+        async leafRecords(leaf) {
+            return leaf.getLeafRecords()
+        }
+    },
+    LeafRecord: {
+        async importedTree(leafRecord) {
+            return leafRecord.getImportedTree()
+        },
+        async leafId(leafRecord) {
+            return leafRecord.getLeaf()
         },
     }
-    // Hobby: {
-    //     async student(student) {
-    //         return student.getStudent()
-    //     }
-    // }
 }
 
 module.exports = resolvers;
