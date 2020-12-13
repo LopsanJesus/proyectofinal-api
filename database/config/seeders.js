@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs');
-const genPassword = async (password) => bcrypt.hash(password, 10);
+const genHashedPassword = async (password) => bcrypt.hash(password, 10);
 
 const getSeeds = async () => (
     [
@@ -17,6 +17,14 @@ const getSeeds = async () => (
                 {
                     name: 'Francés',
                     code: 'fr',
+                },
+                {
+                    name: 'Italiano',
+                    code: 'it',
+                },
+                {
+                    name: 'Alemán',
+                    code: 'de',
                 }
             ]
         },
@@ -24,19 +32,29 @@ const getSeeds = async () => (
             model: 'User',
             data: [
                 {
-                    name: 'John Doe',
-                    email: 'johndoe@johndoe.com',
-                    password: await genPassword('john')
+                    name: 'test@e2e.com',
+                    email: 'test@e2e.com',
+                    password: await genHashedPassword('treelang')
                 },
                 {
                     name: 'Jesus',
                     email: 'suspezchez@gmail.com',
-                    password: await genPassword('jesus')
+                    password: await genHashedPassword('treelang')
+                },
+                {
+                    name: 'Juan Doe',
+                    email: 'juandoe@juandoe.com',
+                    password: await genHashedPassword('treelang')
                 },
                 {
                     name: 'María',
                     email: 'maria10@gmail.com',
-                    password: await genPassword('maria')
+                    password: await genHashedPassword('treelang')
+                },
+                {
+                    name: 'Lucía',
+                    email: 'lucia@gmail.com',
+                    password: await genHashedPassword('treelang')
                 },
             ]
         },
@@ -44,14 +62,14 @@ const getSeeds = async () => (
             model: 'Tree',
             data: [
                 {
-                    name: 'B1 Francés',
+                    name: 'A2: Alemán',
                     owner: 2,
                     sourceLang: 1,
-                    targetLang: 3,
+                    targetLang: 5,
                 },
                 {
-                    name: 'B1 Inglés',
-                    owner: 1,
+                    name: 'B1: Vocabulario',
+                    owner: 2,
                     sourceLang: 1,
                     targetLang: 2,
                 }
@@ -61,15 +79,15 @@ const getSeeds = async () => (
             model: 'Branch',
             data: [
                 {
+                    name: 'Verbos regulares',
+                    treeId: 1,
+                },
+                {
                     name: 'Verbos separables',
                     treeId: 1,
                 },
                 {
-                    name: 'Verbos irregulares',
-                    treeId: 1,
-                },
-                {
-                    name: 'Verbos regulares',
+                    name: 'Verbos modales',
                     treeId: 1,
                 },
                 {
@@ -86,19 +104,224 @@ const getSeeds = async () => (
             model: 'Leaf',
             data: [
                 {
-                    name: 'Leer',
-                    translation: 'Read',
+                    name: 'responder',
+                    translation: 'antworten',
                     branchId: 1,
                 },
                 {
-                    name: 'Cantar',
-                    translation: 'Sing',
+                    name: 'trabajar',
+                    translation: 'arbeiten',
                     branchId: 1,
                 },
                 {
-                    name: 'Entender',
-                    translation: 'Understand',
+                    name: 'preguntar',
+                    translation: 'fragen',
+                    branchId: 1,
+                },
+                {
+                    name: 'creer',
+                    translation: 'glauben',
+                    branchId: 1,
+                },
+                {
+                    name: 'vivir',
+                    translation: 'leben',
+                    branchId: 1,
+                },
+                {
+                    name: 'aprender',
+                    translation: 'lernen',
+                    branchId: 1,
+                },
+                {
+                    name: 'hacer',
+                    translation: 'machen',
+                    branchId: 1,
+                },
+                {
+                    name: 'hablar',
+                    translation: 'reden',
+                    branchId: 1,
+                },
+                {
+                    name: 'decir',
+                    translation: 'sagen',
+                    branchId: 1,
+                },
+                {
+                    name: 'jugar',
+                    translation: 'spielen',
+                    branchId: 1,
+                },
+                {
+                    name: 'construir',
+                    translation: 'bauen',
+                    branchId: 1,
+                },
+                {
+                    name: 'desarrollar',
+                    translation: 'entwickeln',
+                    branchId: 1,
+                },
+                {
+                    name: 'seguir',
+                    translation: 'folgen',
+                    branchId: 1,
+                },
+                {
+                    name: 'bailar',
+                    translation: 'tanzen',
+                    branchId: 1,
+                },
+                {
+                    name: 'cancelar',
+                    translation: 'absagen',
                     branchId: 2,
+                },
+                {
+                    name: 'guiar',
+                    translation: 'anleiten',
+                    branchId: 2,
+                },
+                {
+                    name: 'llegar',
+                    translation: 'ankommen',
+                    branchId: 2,
+                },
+                {
+                    name: 'ofrecer',
+                    translation: 'anbieten',
+                    branchId: 2,
+                },
+                {
+                    name: 'detener',
+                    translation: 'anhalten',
+                    branchId: 2,
+                },
+                {
+                    name: 'invitar',
+                    translation: 'einladen',
+                    branchId: 2,
+                },
+                {
+                    name: 'ser',
+                    translation: 'sein',
+                    branchId: 3,
+                },
+                {
+                    name: 'tener',
+                    translation: 'haben',
+                    branchId: 3,
+                },
+                {
+                    name: 'llegar a ser',
+                    translation: 'werden',
+                    branchId: 3,
+                },
+                {
+                    name: 'poder (permiso)',
+                    translation: 'dürfen',
+                    branchId: 3,
+                },
+                {
+                    name: 'poder (capacidad)',
+                    translation: 'können',
+                    branchId: 3,
+                },
+                {
+                    name: 'gustar',
+                    translation: 'mögen',
+                    branchId: 3,
+                },
+                {
+                    name: 'deber (obligación)',
+                    translation: 'müssen',
+                    branchId: 3,
+                },
+                {
+                    name: 'deber (norma)',
+                    translation: 'sollen',
+                    branchId: 3,
+                },
+                {
+                    name: 'querer',
+                    translation: 'wollen',
+                    branchId: 3,
+                },
+                {
+                    name: 'actriz',
+                    translation: 'actress',
+                    branchId: 4,
+                },
+                {
+                    name: 'panadero',
+                    translation: 'baker',
+                    branchId: 4,
+                },
+                {
+                    name: 'diseñador',
+                    translation: 'designer',
+                    branchId: 4,
+                },
+                {
+                    name: 'ingeniero',
+                    translation: 'engineer',
+                    branchId: 4,
+                },
+                {
+                    name: 'jardinero',
+                    translation: 'gardener',
+                    branchId: 4,
+                },
+                {
+                    name: 'fontanero',
+                    translation: 'plumber',
+                    branchId: 4,
+                },
+                {
+                    name: 'enfermero',
+                    translation: 'nurse',
+                    branchId: 4,
+                },
+                {
+                    name: 'político',
+                    translation: 'politician',
+                    branchId: 4,
+                },
+                {
+                    name: 'taxista',
+                    translation: 'taxi driver',
+                    branchId: 4,
+                },
+                {
+                    name: 'teacher',
+                    translation: 'maestro',
+                    branchId: 4,
+                },
+                {
+                    name: 'dorado',
+                    translation: 'golden',
+                    branchId: 5,
+                },
+                {
+                    name: 'gris',
+                    translation: 'grey',
+                    branchId: 5,
+                },
+                {
+                    name: 'turquesa',
+                    translation: 'turquoise',
+                    branchId: 5,
+                },
+                {
+                    name: 'rojo',
+                    translation: 'red',
+                    branchId: 5,
+                },
+                {
+                    name: 'negro',
+                    translation: 'black',
+                    branchId: 5,
                 },
             ]
         },
@@ -106,71 +329,24 @@ const getSeeds = async () => (
             model: 'ImportedTree',
             data: [
                 {
-                    customName: 'Mi arbol importado',
-                    treeId: 1,
-                    userId: 1,
-                }, {
-                    customName: 'Mi arbol importado 2',
+                    customName: 'A2: Alemán',
                     treeId: 1,
                     userId: 2,
-                }, {
-                    customName: 'Mi arbol',
+                },
+                {
+                    customName: 'B1: Vocabulario',
                     treeId: 2,
                     userId: 2,
-                }
+                },
             ]
         },
         {
             model: 'Test',
-            data: [
-                {
-                    numberOfLeaves: 20,
-                    score: 15,
-                    importedTreeId: 1,
-                }, {
-                    numberOfLeaves: 20,
-                    score: 0,
-                    importedTreeId: 1,
-                }, {
-                    numberOfLeaves: 13,
-                    score: 7,
-                    importedTreeId: 2,
-                }, {
-                    numberOfLeaves: 2,
-                    score: 1,
-                    importedTreeId: 1
-                }
-            ]
+            data: []
         },
         {
             model: 'LeafRecord',
-            data: [
-                {
-                    attempts: 20,
-                    hits: 13,
-                    isApple: false,
-                    importedTreeId: 1,
-                    leafId: 2,
-                }, {
-                    attempts: 3,
-                    hits: 2,
-                    isApple: false,
-                    importedTreeId: 1,
-                    leafId: 2,
-                }, {
-                    attempts: 6,
-                    hits: 6,
-                    isApple: true,
-                    importedTreeId: 2,
-                    leafId: 1,
-                }, {
-                    attempts: 9,
-                    hits: 0,
-                    isApple: false,
-                    importedTreeId: 2,
-                    leafId: 1,
-                }
-            ]
+            data: []
         },
     ]);
 

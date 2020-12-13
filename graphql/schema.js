@@ -1,8 +1,9 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs =
-
     gql`
+    scalar Date
+
     type Language {
         id: Int!
         code: String!
@@ -65,7 +66,8 @@ const typeDefs =
         id: Int!
         numberOfLeaves: Int!
         score: Int!
-        importedTreeId: ImportedTree!
+        createdAt: Date!
+        importedTree: ImportedTree!
     }
 
     type Query {
@@ -75,6 +77,7 @@ const typeDefs =
         getAllTrees: [Tree!]!
         getTree(id: Int!): Tree!
         getBranch(id: Int!): Branch!
+        getMyHistory: [Test!]!
     }
 
     type Mutation {
@@ -83,6 +86,7 @@ const typeDefs =
         importTree (id: Int!): ImportedTree!
         createTree (name: String!, sourceLang: Int!, targetLang: Int!): Tree!
         createBranch (tree: Int!, name: String!, names: [String!]!, translations: [String!]!): Int!
+        recordTest (score: Int!, numberOfLeaves: Int!, names: [String!]!, hits: [String!]!, importedTreeId: Int!): Int!
     }
     
 `;

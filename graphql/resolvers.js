@@ -1,10 +1,27 @@
 const bcrypt = require('bcryptjs')
 const models = require('../database/models')
 const jsonwebtoken = require('jsonwebtoken')
-const { Op } = require("sequelize");
 require('dotenv').config()
+const { GraphQLScalarType } = require('graphql');
+const { Kind } = require('graphql/language');
 
 const resolvers = {
+    Date: new GraphQLScalarType({
+        name: 'Date',
+        description: 'Date custom scalar type',
+        parseValue(value) {
+            return new Date(value); // value from the client
+        },
+        serialize(value) {
+            return value.getTime(); // value sent to the client
+        },
+        parseLiteral(ast) {
+            if (ast.kind === Kind.INT) {
+                return parseInt(ast.value, 10); // ast value is always in string format
+            }
+            return null;
+        },
+    }),
     Query: {
         async getAllLanguages(_, args) {
             return models.Language.findAll()
@@ -38,6 +55,25 @@ const resolvers = {
         async getBranch(_, { id }) {
             try {
                 return modelo = models.Branch.findByPk(id);
+            } catch (error) {
+                throw new Error(error.message)
+            }
+        },
+        async getMyHistory(_, args, { loggedUser }) {
+            try {
+                if (!loggedUser) throw new Error('You are not authenticated!')
+
+                const importedTrees = await models.ImportedTree.findAll({ where: { userId: loggedUser.id } })
+                const tests = await models.Test.findAll();
+                var history = [];
+
+                importedTrees.map((importedTree) => {
+                    tests.map((test) => {
+                        if (test.importedTreeId === importedTree.id)
+                            history = [...history, test];
+                    })
+                })
+                return history;
             } catch (error) {
                 throw new Error(error.message)
             }
@@ -156,6 +192,51 @@ const resolvers = {
             } catch (error) {
                 throw new Error(error.message)
             }
+        },
+        async recordTest(_, { score, numberOfLeaves, names, hits, importedTreeId }, { loggedUser }) {
+            try {
+                if (!loggedUser)
+                    throw new Error('You are not authenticated!');
+
+                const test = await models.Test.create({
+                    numberOfLeaves: numberOfLeaves,
+                    score: score,
+                    importedTreeId: importedTreeId
+                });
+
+                console.log("***************************************");
+                names.map(async (element, index) => {
+                    const leaf = await models.Leaf.findOne({ where: { name: element } });
+                    const leafRecord = await models.LeafRecord.findOne({ where: { leafId: leaf.id } });
+                    if (!leafRecord) {
+                        console.log(leaf.name + " " + leaf.id);
+                        console.log(leafRecord)
+                        console.log("creada nueva")
+                        models.LeafRecord.create({
+                            attempts: 1,
+                            hits: hits[index] === "correct" ? 1 : 0,
+                            isApple: false,
+                            importedTreeId: importedTreeId,
+                            leafId: leaf.id
+                        });
+                    } else {
+                        console.log(leaf.name + " " + leaf.id);
+                        console.log("EXISTENTE")
+                        console.log(leafRecord)
+                        console.log(leafRecord.id)
+                        leafRecord.attempts += 1;
+                        leafRecord.hits = hits[index] === "correct" ? leafRecord.hits + 1 : leafRecord.hits;
+                        leafRecord.isApple = leafRecord.hits > 1 ? true : false;
+                        await leafRecord.save();
+                    }
+                    console.log(hits[index])
+                    return leafRecord;
+                })
+                return 0;
+
+            } catch (error) {
+                throw new Error(error.message)
+            }
         }
     },
     ImportedTree: {
@@ -200,6 +281,11 @@ const resolvers = {
         async leafId(leafRecord) {
             return leafRecord.getLeaf()
         },
+    },
+    Test: {
+        async importedTree(test) {
+            return test.getImportedTree()
+        }
     }
 }
 
