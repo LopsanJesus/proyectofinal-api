@@ -10,14 +10,14 @@ const resolvers = {
         name: 'Date',
         description: 'Date custom scalar type',
         parseValue(value) {
-            return new Date(value); // value from the client
+            return new Date(value);
         },
         serialize(value) {
-            return value.getTime(); // value sent to the client
+            return value.getTime();
         },
         parseLiteral(ast) {
             if (ast.kind === Kind.INT) {
-                return parseInt(ast.value, 10); // ast value is always in string format
+                return parseInt(ast.value, 10);
             }
             return null;
         },
@@ -64,7 +64,7 @@ const resolvers = {
                 if (!loggedUser) throw new Error('You are not authenticated!')
 
                 const importedTrees = await models.ImportedTree.findAll({ where: { userId: loggedUser.id } })
-                const tests = await models.Test.findAll();
+                const tests = await models.Test.findAll({ order: [['createdAt', 'DESC']] });
                 var history = [];
 
                 importedTrees.map((importedTree) => {
@@ -139,14 +139,11 @@ const resolvers = {
                 if (sourceLang == targetLang)
                     throw new Error('SourceLang and TargetLang are equal!');
 
-                const sourceLangId = await models.Tree.findByPk(sourceLang);
-                const targetLangId = await models.Tree.findByPk(targetLang);
-
                 const tree = await models.Tree.create({
                     name: name,
                     owner: loggedUser.id,
-                    sourceLang: sourceLangId.id,
-                    targetLang: targetLangId.id
+                    sourceLang: sourceLang,
+                    targetLang: targetLang
                 });
 
                 await models.ImportedTree.create({
@@ -198,20 +195,16 @@ const resolvers = {
                 if (!loggedUser)
                     throw new Error('You are not authenticated!');
 
-                const test = await models.Test.create({
+                await models.Test.create({
                     numberOfLeaves: numberOfLeaves,
                     score: score,
                     importedTreeId: importedTreeId
                 });
 
-                console.log("***************************************");
                 names.map(async (element, index) => {
                     const leaf = await models.Leaf.findOne({ where: { name: element } });
                     const leafRecord = await models.LeafRecord.findOne({ where: { leafId: leaf.id } });
                     if (!leafRecord) {
-                        console.log(leaf.name + " " + leaf.id);
-                        console.log(leafRecord)
-                        console.log("creada nueva")
                         models.LeafRecord.create({
                             attempts: 1,
                             hits: hits[index] === "correct" ? 1 : 0,
@@ -220,16 +213,11 @@ const resolvers = {
                             leafId: leaf.id
                         });
                     } else {
-                        console.log(leaf.name + " " + leaf.id);
-                        console.log("EXISTENTE")
-                        console.log(leafRecord)
-                        console.log(leafRecord.id)
                         leafRecord.attempts += 1;
                         leafRecord.hits = hits[index] === "correct" ? leafRecord.hits + 1 : leafRecord.hits;
                         leafRecord.isApple = leafRecord.hits > 1 ? true : false;
                         await leafRecord.save();
                     }
-                    console.log(hits[index])
                     return leafRecord;
                 })
                 return 0;

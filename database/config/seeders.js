@@ -294,8 +294,8 @@ const getSeeds = async () => (
                     branchId: 4,
                 },
                 {
-                    name: 'teacher',
-                    translation: 'maestro',
+                    name: 'maestro',
+                    translation: 'teacher',
                     branchId: 4,
                 },
                 {
