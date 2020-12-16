@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const typeDefs =
     gql`
     scalar Date
-
+    
     type Language {
         id: Int!
         code: String!

@@ -7,23 +7,18 @@ const getSeeds = async () => (
             model: 'Language',
             data: [
                 {
-                    name: 'Español',
                     code: 'es',
                 },
                 {
-                    name: 'Inglés',
                     code: 'en',
                 },
                 {
-                    name: 'Francés',
                     code: 'fr',
                 },
                 {
-                    name: 'Italiano',
                     code: 'it',
                 },
                 {
-                    name: 'Alemán',
                     code: 'de',
                 }
             ]
@@ -91,11 +86,11 @@ const getSeeds = async () => (
                     treeId: 1,
                 },
                 {
-                    name: 'Colores',
+                    name: 'Profesiones',
                     treeId: 2,
                 },
                 {
-                    name: 'Profesiones',
+                    name: 'Colores',
                     treeId: 2,
                 },
             ]
