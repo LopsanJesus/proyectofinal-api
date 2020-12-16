@@ -139,15 +139,18 @@ const resolvers = {
                 if (sourceLang == targetLang)
                     throw new Error('SourceLang and TargetLang are equal!');
 
+                if (name.trim() === "")
+                    throw new Error('Tree name cannot be empty');
+
                 const tree = await models.Tree.create({
-                    name: name,
+                    name: name.trim(),
                     owner: loggedUser.id,
                     sourceLang: sourceLang,
                     targetLang: targetLang
                 });
 
                 await models.ImportedTree.create({
-                    customName: name,
+                    customName: name.trim(),
                     treeId: tree.id,
                     userId: loggedUser.id
                 });
@@ -163,8 +166,11 @@ const resolvers = {
                 if (!loggedUser)
                     throw new Error('You are not authenticated!');
 
+                if (name.trim() === "")
+                    throw new Error('Branch name cannot be empty');
+
                 const branch = await models.Branch.create({
-                    name: name,
+                    name: name.trim(),
                     treeId: tree
                 });
 
@@ -172,8 +178,8 @@ const resolvers = {
                 names.map((element, index) => {
                     leafs[index] = {
                         branchId: branch.id,
-                        name: element,
-                        translation: translations[index]
+                        name: element.trim(),
+                        translation: translations[index].trim()
                     }
                 })
 
