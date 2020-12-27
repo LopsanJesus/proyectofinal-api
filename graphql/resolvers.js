@@ -210,6 +210,9 @@ const resolvers = {
                 names.map(async (element, index) => {
                     const leaf = await models.Leaf.findOne({ where: { name: element } });
                     const leafRecord = await models.LeafRecord.findOne({ where: { leafId: leaf.id } });
+                    console.log("******");
+                    console.log(leafRecord);
+                    console.log("******");
                     if (!leafRecord) {
                         models.LeafRecord.create({
                             attempts: 1,
