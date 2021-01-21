@@ -1,348 +1,309 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 const genHashedPassword = async (password) => bcrypt.hash(password, 10);
 
-const getSeeds = async () => (
-    [
-        {
-            model: 'Language',
-            data: [
-                {
-                    code: 'es',
-                },
-                {
-                    code: 'en',
-                },
-                {
-                    code: 'fr',
-                },
-                {
-                    code: 'it',
-                },
-                {
-                    code: 'de',
-                }
-            ]
-        },
-        {
-            model: 'User',
-            data: [
-                {
-                    name: 'test@e2e.com',
-                    email: 'test@e2e.com',
-                    password: await genHashedPassword('treelang')
-                },
-                {
-                    name: 'Jesus',
-                    email: 'suspezchez@gmail.com',
-                    password: await genHashedPassword('treelang')
-                },
-                {
-                    name: 'Juan Doe',
-                    email: 'juandoe@juandoe.com',
-                    password: await genHashedPassword('treelang')
-                },
-                {
-                    name: 'María',
-                    email: 'maria10@gmail.com',
-                    password: await genHashedPassword('treelang')
-                },
-                {
-                    name: 'Lucía',
-                    email: 'lucia@gmail.com',
-                    password: await genHashedPassword('treelang')
-                },
-            ]
-        },
-        {
-            model: 'Tree',
-            data: [
-                {
-                    name: 'A2: Alemán',
-                    owner: 2,
-                    sourceLang: 1,
-                    targetLang: 5,
-                },
-                {
-                    name: 'B1: Vocabulario',
-                    owner: 2,
-                    sourceLang: 1,
-                    targetLang: 2,
-                }
-            ]
-        },
-        {
-            model: 'Branch',
-            data: [
-                {
-                    name: 'Verbos regulares',
-                    treeId: 1,
-                },
-                {
-                    name: 'Verbos separables',
-                    treeId: 1,
-                },
-                {
-                    name: 'Verbos modales',
-                    treeId: 1,
-                },
-                {
-                    name: 'Profesiones',
-                    treeId: 2,
-                },
-                {
-                    name: 'Colores',
-                    treeId: 2,
-                },
-            ]
-        },
-        {
-            model: 'Leaf',
-            data: [
-                {
-                    name: 'responder',
-                    translation: 'antworten',
-                    branchId: 1,
-                },
-                {
-                    name: 'trabajar',
-                    translation: 'arbeiten',
-                    branchId: 1,
-                },
-                {
-                    name: 'preguntar',
-                    translation: 'fragen',
-                    branchId: 1,
-                },
-                {
-                    name: 'creer',
-                    translation: 'glauben',
-                    branchId: 1,
-                },
-                {
-                    name: 'vivir',
-                    translation: 'leben',
-                    branchId: 1,
-                },
-                {
-                    name: 'aprender',
-                    translation: 'lernen',
-                    branchId: 1,
-                },
-                {
-                    name: 'hacer',
-                    translation: 'machen',
-                    branchId: 1,
-                },
-                {
-                    name: 'hablar',
-                    translation: 'reden',
-                    branchId: 1,
-                },
-                {
-                    name: 'decir',
-                    translation: 'sagen',
-                    branchId: 1,
-                },
-                {
-                    name: 'jugar',
-                    translation: 'spielen',
-                    branchId: 1,
-                },
-                {
-                    name: 'construir',
-                    translation: 'bauen',
-                    branchId: 1,
-                },
-                {
-                    name: 'desarrollar',
-                    translation: 'entwickeln',
-                    branchId: 1,
-                },
-                {
-                    name: 'seguir',
-                    translation: 'folgen',
-                    branchId: 1,
-                },
-                {
-                    name: 'bailar',
-                    translation: 'tanzen',
-                    branchId: 1,
-                },
-                {
-                    name: 'cancelar',
-                    translation: 'absagen',
-                    branchId: 2,
-                },
-                {
-                    name: 'guiar',
-                    translation: 'anleiten',
-                    branchId: 2,
-                },
-                {
-                    name: 'llegar',
-                    translation: 'ankommen',
-                    branchId: 2,
-                },
-                {
-                    name: 'ofrecer',
-                    translation: 'anbieten',
-                    branchId: 2,
-                },
-                {
-                    name: 'detener',
-                    translation: 'anhalten',
-                    branchId: 2,
-                },
-                {
-                    name: 'invitar',
-                    translation: 'einladen',
-                    branchId: 2,
-                },
-                {
-                    name: 'ser',
-                    translation: 'sein',
-                    branchId: 3,
-                },
-                {
-                    name: 'tener',
-                    translation: 'haben',
-                    branchId: 3,
-                },
-                {
-                    name: 'llegar a ser',
-                    translation: 'werden',
-                    branchId: 3,
-                },
-                {
-                    name: 'poder (permiso)',
-                    translation: 'dürfen',
-                    branchId: 3,
-                },
-                {
-                    name: 'poder (capacidad)',
-                    translation: 'können',
-                    branchId: 3,
-                },
-                {
-                    name: 'gustar',
-                    translation: 'mögen',
-                    branchId: 3,
-                },
-                {
-                    name: 'deber (obligación)',
-                    translation: 'müssen',
-                    branchId: 3,
-                },
-                {
-                    name: 'deber (norma)',
-                    translation: 'sollen',
-                    branchId: 3,
-                },
-                {
-                    name: 'querer',
-                    translation: 'wollen',
-                    branchId: 3,
-                },
-                {
-                    name: 'actriz',
-                    translation: 'actress',
-                    branchId: 4,
-                },
-                {
-                    name: 'panadero',
-                    translation: 'baker',
-                    branchId: 4,
-                },
-                {
-                    name: 'diseñador',
-                    translation: 'designer',
-                    branchId: 4,
-                },
-                {
-                    name: 'ingeniero',
-                    translation: 'engineer',
-                    branchId: 4,
-                },
-                {
-                    name: 'jardinero',
-                    translation: 'gardener',
-                    branchId: 4,
-                },
-                {
-                    name: 'fontanero',
-                    translation: 'plumber',
-                    branchId: 4,
-                },
-                {
-                    name: 'enfermero',
-                    translation: 'nurse',
-                    branchId: 4,
-                },
-                {
-                    name: 'político',
-                    translation: 'politician',
-                    branchId: 4,
-                },
-                {
-                    name: 'taxista',
-                    translation: 'taxi driver',
-                    branchId: 4,
-                },
-                {
-                    name: 'maestro',
-                    translation: 'teacher',
-                    branchId: 4,
-                },
-                {
-                    name: 'dorado',
-                    translation: 'golden',
-                    branchId: 5,
-                },
-                {
-                    name: 'gris',
-                    translation: 'grey',
-                    branchId: 5,
-                },
-                {
-                    name: 'turquesa',
-                    translation: 'turquoise',
-                    branchId: 5,
-                },
-                {
-                    name: 'rojo',
-                    translation: 'red',
-                    branchId: 5,
-                },
-                {
-                    name: 'negro',
-                    translation: 'black',
-                    branchId: 5,
-                },
-            ]
-        },
-        {
-            model: 'ImportedTree',
-            data: [
-                {
-                    customName: 'A2: Alemán',
-                    treeId: 1,
-                    userId: 2,
-                },
-                {
-                    customName: 'B1: Vocabulario',
-                    treeId: 2,
-                    userId: 2,
-                },
-            ]
-        },
-        {
-            model: 'Test',
-            data: []
-        },
-        {
-            model: 'LeafRecord',
-            data: []
-        },
-    ]);
+const addBranchId = (leaves, branchId) => {
+  return leaves.map((leaf) => ({
+    ...leaf,
+    branchId: branchId,
+  }));
+};
+
+var leafSeeders = [];
+
+var normalizedPath = require("path").join(__dirname, "leafSeeders");
+
+require("fs")
+  .readdirSync(normalizedPath)
+  .forEach(function (file) {
+    const leaves = require("./leafSeeders/" + file);
+    leafSeeders = [
+      ...leafSeeders,
+      ...addBranchId(leaves, parseInt(file.slice(0, file.indexOf("-")))),
+    ];
+  });
+
+const getSeeds = async () => [
+  {
+    model: "Language",
+    data: [
+      {
+        code: "es",
+      },
+      {
+        code: "en",
+      },
+      {
+        code: "fr",
+      },
+      {
+        code: "it",
+      },
+      {
+        code: "de",
+      },
+    ],
+  },
+  {
+    model: "User",
+    data: [
+      {
+        name: "test@e2e.com",
+        email: "test@e2e.com",
+        password: await genHashedPassword("treelang"),
+      },
+      {
+        name: "Jesus",
+        email: "suspezchez@gmail.com",
+        password: await genHashedPassword("treelang"),
+      },
+      {
+        name: "John Doe",
+        email: "johndoe@yahoo.com",
+        password: await genHashedPassword("treelang"),
+      },
+      {
+        name: "Maria",
+        email: "maria10@gmail.com",
+        password: await genHashedPassword("treelang"),
+      },
+      {
+        name: "Eva",
+        email: "evatl@gmail.com",
+        password: await genHashedPassword("treelang"),
+      },
+      {
+        name: "Robert",
+        email: "imrobertsmith@gmail.com",
+        password: await genHashedPassword("treelang"),
+      },
+    ],
+  },
+  {
+    model: "Tree",
+    data: [
+      {
+        name: "Verbos en Alemán",
+        owner: 4,
+        sourceLang: 1,
+        targetLang: 5,
+      },
+      {
+        name: "Vocabulario general",
+        owner: 4,
+        sourceLang: 1,
+        targetLang: 5,
+      },
+      {
+        name: "Basic Vocabulary",
+        owner: 6,
+        sourceLang: 2,
+        targetLang: 3,
+      },
+      {
+        name: "B1: Vocabulario",
+        owner: 2,
+        sourceLang: 1,
+        targetLang: 2,
+      },
+      {
+        name: "Mon vocabulaire français",
+        owner: 5,
+        sourceLang: 1,
+        targetLang: 3,
+      },
+    ],
+  },
+  {
+    model: "ImportedTree",
+    data: [
+      {
+        customName: "Verbos en Alemán",
+        treeId: 1,
+        userId: 4,
+      },
+      {
+        customName: "Vocabulario general",
+        treeId: 2,
+        userId: 4,
+      },
+      {
+        customName: "Basic Vocabulary",
+        treeId: 3,
+        userId: 6,
+      },
+      {
+        customName: "B1: Vocabulario",
+        treeId: 4,
+        userId: 2,
+      },
+      {
+        customName: "Mon vocabulaire français",
+        treeId: 5,
+        userId: 5,
+      },
+      {
+        customName: "Verbos en Alemán",
+        treeId: 1,
+        userId: 2,
+      },
+      {
+        customName: "Vocabulario general",
+        treeId: 2,
+        userId: 2,
+      },
+      {
+        customName: "Basic Vocabulary",
+        treeId: 3,
+        userId: 2,
+      },
+      {
+        customName: "Mon vocabulaire français",
+        treeId: 5,
+        userId: 2,
+      },
+    ],
+  },
+  {
+    model: "Branch",
+    data: [
+      {
+        name: "Verbos más frecuentes",
+        treeId: 1,
+      },
+      {
+        name: "Verbos separables",
+        treeId: 1,
+      },
+      {
+        name: "Verbos con preposición (acusativo)",
+        treeId: 1,
+      },
+      {
+        name: "Verbos con preposición (dativo)",
+        treeId: 1,
+      },
+      {
+        name: "Verbos modales",
+        treeId: 1,
+      },
+      {
+        name: "Profesiones",
+        treeId: 2,
+      },
+      {
+        name: "Colores",
+        treeId: 2,
+      },
+      {
+        name: "Partes del Cuerpo",
+        treeId: 2,
+      },
+      {
+        name: "Comida",
+        treeId: 2,
+      },
+      {
+        name: "Familia",
+        treeId: 2,
+      },
+      {
+        name: "Animales",
+        treeId: 2,
+      },
+      {
+        name: "Partes de la Casa",
+        treeId: 2,
+      },
+      {
+        name: "Ropa",
+        treeId: 2,
+      },
+      {
+        name: "Basics",
+        treeId: 3,
+      },
+      {
+        name: "Greetings",
+        treeId: 3,
+      },
+      {
+        name: "Ordinal Numbers",
+        treeId: 3,
+      },
+      {
+        name: "Cardinal Numbers",
+        treeId: 3,
+      },
+      {
+        name: "Colours",
+        treeId: 3,
+      },
+      {
+        name: "Educación",
+        treeId: 4,
+      },
+      {
+        name: "Viajes",
+        treeId: 4,
+      },
+      {
+        name: "Trabajo",
+        treeId: 4,
+      },
+      {
+        name: "Vacaciones",
+        treeId: 4,
+      },
+      {
+        name: "Tiempo Libre",
+        treeId: 4,
+      },
+      {
+        name: "Salud",
+        treeId: 4,
+      },
+      {
+        name: "Transporte",
+        treeId: 4,
+      },
+      {
+        name: "Deportes",
+        treeId: 4,
+      },
+      {
+        name: "Vida cotidiana",
+        treeId: 4,
+      },
+      {
+        name: "La Familia",
+        treeId: 5,
+      },
+      {
+        name: "Los vegetales",
+        treeId: 5,
+      },
+      {
+        name: "Las frutas",
+        treeId: 5,
+      },
+      {
+        name: "Los animales",
+        treeId: 5,
+      },
+    ],
+  },
+  {
+    model: "Leaf",
+    data: leafSeeders,
+  },
+  {
+    model: "Test",
+    data: [],
+  },
+  {
+    model: "LeafRecord",
+    data: [],
+  },
+];
 
 module.exports = getSeeds;

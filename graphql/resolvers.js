@@ -234,7 +234,7 @@ const resolvers = {
             leafRecord.attempts += 1;
             leafRecord.hits =
               hits[index] === "correct" ? leafRecord.hits + 1 : leafRecord.hits;
-            leafRecord.isApple = leafRecord.hits > 1 ? true : false;
+            leafRecord.isApple = leafRecord.hits > 2 ? true : false;
             await leafRecord.save();
           }
           return leafRecord;
