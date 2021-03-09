@@ -13,7 +13,9 @@ const sequelize = new Sequelize(
     dialect: process.env.DATABASE_DIALECT,
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
-    ssl: true,
+    dialectOptions: {
+      ssl: true /* for SSL config since Heroku gives you this out of the box */,
+    },
   }
 );
 
