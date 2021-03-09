@@ -28,7 +28,7 @@ const resolvers = {
       return models.Language.findAll();
     },
     async getMe(_, args, { loggedUser }) {
-      if (!loggedUser) throw new Error("You are not authenticated");
+      if (!loggedUser) throw new Error("You are not authenticated!");
       return await models.User.findByPk(loggedUser.id);
     },
     async getMyForest(_, args, { loggedUser }) {
