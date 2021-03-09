@@ -5,6 +5,19 @@ const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 const db = {};
 
+if (process.env.DATABASE_SSL === "true")
+  console.log("SSL Connection activated");
+
+const sslConfig =
+  process.env.DATABASE_SSL === "true"
+    ? {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      }
+    : false;
+
 const sequelize = new Sequelize(
   process.env.DATABASE_DB,
   process.env.DATABASE_USERNAME,
@@ -13,12 +26,7 @@ const sequelize = new Sequelize(
     dialect: process.env.DATABASE_DIALECT,
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false, // <<<<<< YOU NEED THIS
-      },
-    },
+    dialectOptions: sslConfig,
   }
 );
 
